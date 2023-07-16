@@ -4,15 +4,24 @@ function ProjectList() {
     {
       name: "shopping page",
       description: "authentication, database, styling, react, redux, etc.",
+      link: "https://google.com",
     },
     {
       name: "knowledge assistant",
       description: "llm, model tunning, web crawler, etc.",
+      link: "https://google.com",
+    },
+    {
+      name: "PlayTorch",
+      description: "mobile, react-native, pytorch, jsi",
+      link: "https://playtorch.dev/",
     },
   ];
   const listItems = projects.map((item) => (
     <div>
-      <Link><h1>{item.name}</h1></Link>
+      <Link to={item.link}>
+        <h1>{item.name}</h1>
+      </Link>
       <p>{item.description}</p>
     </div>
   ));
