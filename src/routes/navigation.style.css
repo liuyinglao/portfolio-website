@@ -1,0 +1,8 @@
+.navigation-bar {
+  height: 35px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+}
