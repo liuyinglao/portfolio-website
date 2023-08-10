@@ -10,14 +10,14 @@ function Home() {
           I am a software engineer who enjoys
           <ul>
             <li>solving problems,</li>
-            <li><Link to="/projects" className="link" >building tools,</Link></li>
+            <li><Link to="/projects" className="link">building tools,</Link></li>
             <li>learning new ideas,</li>
             <li>making friends,</li>
-            <li>and playing games</li>
+            <li>and <Link to="/game" className="link">playing games</Link></li>
           </ul>
         </p>
         <p>
-          In my spare time, I like to 
+          In my spare time, I like to
           <ul>
             <li>meet new friends, </li>
             <li>play games,</li>
