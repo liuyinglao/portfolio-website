@@ -9,8 +9,11 @@ const Navigation = () => {
         <Link to="/">
           <div>Home</div>
         </Link>
-        <Link to="/projects">
+        <Link to="/projects" >
           <div>Projects</div>
+        </Link>
+        <Link to="/game" >
+          <div>Game</div>
         </Link>
       </div>
       <Outlet />
