@@ -2,9 +2,14 @@ import { Link } from "react-router-dom";
 function ProjectList() {
   const projects = [
     {
-      name: "React-dom Playground",
+      name: "React Examples",
       description: "how common UI are achieved with react",
       link: "./reactdom",
+    },
+    {
+      name: "React Playground",
+      description: "how common UI are achieved with react",
+      link: "./playground",
     },
     {
       name: "shopping page",
