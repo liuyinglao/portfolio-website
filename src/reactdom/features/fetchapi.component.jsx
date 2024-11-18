@@ -44,13 +44,13 @@ const Fetchapi = () => {
         <th>Language</th>
       </tr>
 
-      {countries.map((country) => {
+      {countries.map((country, i) => {
         return (
-          <tr>
-            <td>{country.index}</td>
-            <td>{country.name.common}</td>
-            <td>{country.capital[0]}</td>
-            <td>
+          <tr key={i}>
+            <td key={`{i}-index`}>{country.index}</td>
+            <td key={`{i}-name`}>{country.name.common}</td>
+            <td key={`{i}-capital`}>{country.capital[0]}</td>
+            <td key={`{i}-language`}>
               {Object.keys(country.languages).map((k) => country.languages[k])}
             </td>
           </tr>
