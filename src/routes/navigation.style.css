@@ -4,5 +4,13 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+}
 
+.navigation-title {
+  /* centralize text starts */
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  /* centralize text ends */
+  font-weight: bold;   /* Makes the font bold */
 }

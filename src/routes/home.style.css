@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    gap: 20px; /* Optional spacing between columns */
+  }
+  
+  .column {
+    flex: 1; /* Each column takes up equal space */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .left {
+    background-color: #f0f8ff; /* Light blue */
+    text-align: center;
+  }
+  
+  .right {
+    background-color: #f5f5f5; /* Light gray */
+  }
+  

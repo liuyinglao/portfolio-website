@@ -6,6 +6,9 @@ const Fetchapi = () => {
   );
   const [isLoading, setIsLoading] = React.useState(false);
   const [countries, setCountries] = React.useState([]);
+  const [page, setPage] = React.useState(1);
+  const pageSize = 5;
+  const maxPage = Math.floor(countries.length / pageSize);
 
   React.useEffect(() => {
     localStorage.setItem("myValueInLocalStorage", value);
@@ -20,18 +23,23 @@ const Fetchapi = () => {
     // const countries = JSON.parse(data);
     const countryCount = data.length;
     setValue(countryCount);
-    const countries = data.slice(0, 5).map((country, index) => {
+    const countries = data.map((country, index) => {
       const { name, capital, languages } = country;
       return { index, name, capital, languages };
     });
     console.log({ countries });
     setCountries(countries);
     setIsLoading(false);
+    setPage(0);
   };
 
   useEffect(() => {
     handleFetchData();
   }, [isLoading]);
+
+  useEffect(() => {
+    console.log(page)
+  }, [page]);
 
   const onChange = (event) => setValue(event.target.value);
 
@@ -44,18 +52,22 @@ const Fetchapi = () => {
         <th>Language</th>
       </tr>
 
-      {countries.map((country, i) => {
-        return (
-          <tr key={i}>
-            <td key={`{i}-index`}>{country.index}</td>
-            <td key={`{i}-name`}>{country.name.common}</td>
-            <td key={`{i}-capital`}>{country.capital[0]}</td>
-            <td key={`{i}-language`}>
-              {Object.keys(country.languages).map((k) => country.languages[k])}
-            </td>
-          </tr>
-        );
-      })}
+      {countries
+        .slice(page * pageSize, (page + 1) * pageSize)
+        .map((country, i) => {
+          return (
+            <tr key={i}>
+              <td key={`{i}-index`}>{country.index + 1}</td>
+              <td key={`{i}-name`}>{country.name.common}</td>
+              <td key={`{i}-capital`}>{country.capital[0]}</td>
+              <td key={`{i}-language`}>
+                {Object.keys(country.languages).map(
+                  (k) => country.languages[k]
+                )}
+              </td>
+            </tr>
+          );
+        })}
     </table>
   );
 
@@ -70,7 +82,11 @@ const Fetchapi = () => {
         <input type="email" name="email" id="email" required />
       </div>
       <div class="form-example">
-        <input type="submit" value="Subscribe!" onclick={console.log('submitted')} />
+        <input
+          type="submit"
+          value="Subscribe!"
+          onclick={console.log("submitted")}
+        />
       </div>
     </form>
   );
@@ -78,9 +94,21 @@ const Fetchapi = () => {
   return (
     <div>
       <input value={value} type="text" onChange={onChange} />
+      <button
+        type="button"
+        onClick={() => setPage((page) => Math.max(0, page - 1))}
+      >
+        Previous Page
+      </button>
       <button type="button" onClick={() => setIsLoading(true)}>
         {" "}
         fetch countries{" "}
+      </button>
+      <button
+        type="button"
+        onClick={() => setPage((page) => Math.min(maxPage, page + 1))}
+      >
+        Next Page
       </button>
       {isLoading ? <p>is Loading...</p> : <p>{value}</p>}
       {table}
