@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 const ObjectToList = ({ data }) => {
   // Base case: if data is not an object or array, render it as a string
