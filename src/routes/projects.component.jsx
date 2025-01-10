@@ -26,6 +26,11 @@ function ProjectList() {
       description: "mobile, react-native, pytorch, jsi",
       link: "https://playtorch.dev/",
     },
+      {
+      name: "Interview Questions",
+      description: "Interesting Interview Questions I came across",
+      link: "./interview_questions",
+    },
   ];
   const listItems = projects.map((item, index) => (
     <div key={item.name}>
