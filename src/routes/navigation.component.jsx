@@ -21,7 +21,7 @@ const Navigation = () => {
     <Fragment>
       <div className="navigation-bar">
         {links.map(({ title, path }) => (
-          <Link className="navigation-title" to={path}>
+          <Link key={title} className="navigation-title" to={path}>
             {title}
           </Link>
         ))}

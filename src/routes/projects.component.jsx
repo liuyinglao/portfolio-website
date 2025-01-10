@@ -27,8 +27,8 @@ function ProjectList() {
       link: "https://playtorch.dev/",
     },
   ];
-  const listItems = projects.map((item) => (
-    <div>
+  const listItems = projects.map((item, index) => (
+    <div key={item.name}>
       <Link to={item.link}>
         <h1>{item.name}</h1>
       </Link>

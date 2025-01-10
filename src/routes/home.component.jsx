@@ -10,24 +10,26 @@ function Home() {
     <div className="column left">
       <header className="App-header">
         <h1>Welcome to my personal website!</h1>
-        <p>
-          I am a software engineer who enjoys
+        <section className="section">
+          <p>
+            I am a software engineer who enjoys
+          </p>
           <ul>
             <li>solving problems,</li>
             <li><Link to="/projects" className="link">building tools,</Link></li>
             <li>learning new ideas,</li>
-            <li>making friends,</li>
             <li>and <Link to="/game" className="link">playing games</Link></li>
           </ul>
-        </p>
-        <p>
-          In my spare time, I like to
+        </section>
+        <section className="section">
+          <p>In my spare time, I like to</p>
           <ul>
-            <li>meet new friends, </li>
-            <li>play games,</li>
+            <li>meet new friends,</li>
             <li>and travel with friends and family</li>
+            <li>play games,</li>
+            <li>read interesting books</li>
           </ul>
-        </p>
+        </section>
       </header>
     </div>
     <div className="column right">
