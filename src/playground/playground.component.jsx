@@ -1,5 +1,4 @@
-import React from "react";
-
+import { useState } from "react";
 // const ObjectToList = ({ data }) => {
 //   // Base case: if data is not an object or array, render it as a string
 //   if (typeof data !== "object" || data === null) {
@@ -38,32 +37,33 @@ import React from "react";
 // 前端三板斧： fetch -> process -> render
 
 function Playground() {
+    const ENDPOINT = "https://gentle-ravine-92622-4d0352cb2a24.herokuapp.com/entries/"
 
+    const [data, setData] = useState("");
+    const [loading, setLoading] = useState(false);
 
-// const [data, setData] = React.useState('')
-// const handleFetchData = async () => {
-//     const response = await fetch(
-//       "http://localhost:5006/entries/", {
-//           method: 'POST'
-//         }
-//     );
-//     console.log(response)
-//     const fetchedData = await response.text()
-//     setData(fetchedData);
-//     console.log(fetchedData);
-//   };
-//     React.useEffect(() =>  {
-//         handleFetchData();
-//     }, [handleFetchData])
-//
-//   return (
-//     <div>
-//       <h1>abcd</h1>
-//         <p>{data}</p>
-//     </div>
-//   );
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch(ENDPOINT);
+            const result = await response.json();
+            console.log(result);
+            setData(result.message || "No data found");
+        } catch (error) {
+            setData("Error fetching data");
+        } finally {
+            setLoading(false);
+        }
+    };
 
-      return <header>Start to test your ideas here</header>;
+    return (
+        <div className="flex flex-col items-center gap-4 p-4">
+            <button onClick={fetchData} disabled={loading}>
+                {loading ? "Loading..." : "Fetch Data"}
+            </button>
+            <input type="text" value={data} readOnly className="w-80" />
+        </div>
+    );
 }
 
 export default Playground;

@@ -5,7 +5,7 @@ import {Routes, Route} from "react-router-dom";
 import Game from "./routes/game.component";
 import ReactDomFeatureList from "./reactdom/FeatureTable";
 import Playground from "./playground/playground.component";
-import InterviewQuestions from "./playground/InterviewQuestions.component";
+import InterviewQuestions from "./interviewQuestions/InterviewQuestions.component";
 
 function App() {
     return (

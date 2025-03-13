@@ -42,10 +42,9 @@ const interviewQuestions = [
         type: ['React'],
         description: "fetch salary data from the API and calculate average salary of each department." +
             " support department filter" +
-            " support loading spinner" +
-            "// 前端三板斧： fetch -> process -> render",
+            " support loading spinner",
         solutionSteps: ['Step 1: Identify states to control the app',
-            'Step 2: test the API with useEffect and async',
+            'Step 2: fetch data from the API with useEffect and async',
             'Step 3: process the data ',
             'Step 4: Render with <ul> and <li>',
             'Step 5: add <input> to allow filter input'],
