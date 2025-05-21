@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import { FC, useState, ChangeEvent } from "react";
 
-const NumberAdjuster = () => {
+const NumberAdjuster: FC = () => {
   // Initialize the state to hold the number value, starting at 0
-  const [number, setNumber] = useState(0);
+  const [number, setNumber] = useState<number>(0);
 
   // Function to increment the number
-  const increment = () => {
+  const increment = (): void => {
     setNumber(number + 1);
   };
 
   // Function to decrement the number
-  const decrement = () => {
+  const decrement = (): void => {
     setNumber(number - 1);
   };
 
   // Function to handle manual input in the text field
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const value = parseInt(e.target.value, 10);
     // If value is a number, update the state
     if (!isNaN(value)) {
@@ -39,4 +39,4 @@ const NumberAdjuster = () => {
   );
 };
 
-export default NumberAdjuster;
+export default NumberAdjuster; 

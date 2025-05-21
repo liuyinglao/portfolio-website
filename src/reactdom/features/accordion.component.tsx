@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 
-const AccordionItem = ({ title, content }) => {
-  const [isOpen, setIsOpen] = useState(false);
+interface AccordionItemProps {
+  title: string;
+  content: string;
+}
+
+const AccordionItem: FC<AccordionItemProps> = ({ title, content }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   // Toggle the visibility of the accordion content
-  const toggleAccordion = () => {
+  const toggleAccordion = (): void => {
     setIsOpen(!isOpen);
   };
 
@@ -21,8 +26,8 @@ const AccordionItem = ({ title, content }) => {
   );
 };
 
-const Accordion = () => {
-  const items = [
+const Accordion: FC = () => {
+  const items: AccordionItemProps[] = [
     { title: 'Section 1', content: 'This is the content of Section 1.' },
     { title: 'Section 2', content: 'This is the content of Section 2.' },
     { title: 'Section 3', content: 'This is the content of Section 3.' },
@@ -37,4 +42,4 @@ const Accordion = () => {
   );
 };
 
-export default Accordion;
+export default Accordion; 

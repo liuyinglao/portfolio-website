@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { FC, useState, useEffect, CSSProperties } from 'react';
 
-const images = [
+const images: string[] = [
   'https://via.placeholder.com/600x400?text=Slide+1',
   'https://via.placeholder.com/600x400?text=Slide+2',
   'https://via.placeholder.com/600x400?text=Slide+3',
 ];
 
+interface CarouselProps {
+  interval?: number;
+}
 
-const Carousel = ({interval = 3000 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const Carousel: FC<CarouselProps> = ({ interval = 3000 }) => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   // Automatically go to the next slide at specified intervals
   useEffect(() => {
@@ -21,40 +24,40 @@ const Carousel = ({interval = 3000 }) => {
   }, [currentIndex, interval]);
 
   // Go to the next slide
-  const goToNextSlide = () => {
+  const goToNextSlide = (): void => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
   // Go to the previous slide
-  const goToPrevSlide = () => {
+  const goToPrevSlide = (): void => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
 
   // Go to a specific slide
-  const goToSlide = (index) => {
+  const goToSlide = (index: number): void => {
     setCurrentIndex(index);
   };
 
   return (
-    <div style={styles.carouselContainer}>
-      <div style={styles.imageContainer}>
-        <img src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} style={styles.image} />
+    <div style={styles['carouselContainer']}>
+      <div style={styles['imageContainer']}>
+        <img src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} style={styles['image']} />
       </div>
       
       {/* Previous and Next buttons */}
-      <button onClick={goToPrevSlide} style={{ ...styles.navButton, left: '10px' }}>❮</button>
-      <button onClick={goToNextSlide} style={{ ...styles.navButton, right: '10px' }}>❯</button>
+      <button onClick={goToPrevSlide} style={{ ...styles['navButton'], left: '10px' }}>❮</button>
+      <button onClick={goToNextSlide} style={{ ...styles['navButton'], right: '10px' }}>❯</button>
 
       {/* Indicators */}
-      <div style={styles.indicatorContainer}>
+      <div style={styles['indicatorContainer']}>
         {images.map((_, index) => (
           <div
             key={index}
             onClick={() => goToSlide(index)}
             style={{
-              ...styles.indicator,
+              ...styles['indicator'],
               backgroundColor: index === currentIndex ? '#333' : '#bbb',
             }}
           />
@@ -65,7 +68,7 @@ const Carousel = ({interval = 3000 }) => {
 };
 
 // Styles for the carousel
-const styles = {
+const styles: Record<string, CSSProperties> = {
   carouselContainer: {
     position: 'relative',
     width: '600px',
@@ -110,4 +113,4 @@ const styles = {
   },
 };
 
-export default Carousel;
+export default Carousel; 

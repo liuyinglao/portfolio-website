@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
+import { FC, useState, ChangeEvent, MouseEvent } from 'react';
 
-const options = [
-    'Apple',
-    'Banana',
-    'Cherry',
-    'Date',
-    'Fig',
-    'Grape',
-    'Lemon',
-    'Orange',
-    'Peach',
-    'Pineapple',
-    'Strawberry',
-  ];
+const options: string[] = [
+  'Apple',
+  'Banana',
+  'Cherry',
+  'Date',
+  'Fig',
+  'Grape',
+  'Lemon',
+  'Orange',
+  'Peach',
+  'Pineapple',
+  'Strawberry',
+];
 
-
-const Autocomplete = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [filteredOptions, setFilteredOptions] = useState([]);
-  const [showOptions, setShowOptions] = useState(false);
+const Autocomplete: FC = () => {
+  const [inputValue, setInputValue] = useState<string>('');
+  const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
+  const [showOptions, setShowOptions] = useState<boolean>(false);
 
   // Handle changes in the input field
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value;
     setInputValue(value);
 
@@ -38,7 +37,7 @@ const Autocomplete = () => {
   };
 
   // Handle selection from the dropdown list
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (option: string): void => {
     setInputValue(option);
     setShowOptions(false);
   };
@@ -81,7 +80,7 @@ const Autocomplete = () => {
                 cursor: 'pointer',
                 borderBottom: '1px solid #ddd',
               }}
-              onMouseDown={(e) => e.preventDefault()}
+              onMouseDown={(e: MouseEvent) => e.preventDefault()}
             >
               {option}
             </li>
@@ -92,4 +91,4 @@ const Autocomplete = () => {
   );
 };
 
-export default Autocomplete;
+export default Autocomplete; 

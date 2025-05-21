@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import Home from "./routes/home.component";
 import ProjectList from "./routes/projects.component";
 import Navigation from "./routes/navigation.component";
@@ -7,7 +8,7 @@ import ReactDomFeatureList from "./reactdom/FeatureTable";
 import Playground from "./playground/playground.component";
 import InterviewQuestions from "./interviewQuestions/InterviewQuestions.component";
 
-function App() {
+const App: FC = () => {
     return (
         <Routes>
             <Route path="/" element={<Navigation/>}>
@@ -22,4 +23,4 @@ function App() {
     );
 }
 
-export default App;
+export default App; 

@@ -1,7 +1,16 @@
-import React, {useState} from "react";
+import { useState, FC, ReactNode } from "react";
 import PaloAltoNetworkInterviewQuestion from "./PaloAltoNetworkInterviewQuestion.component";
 
-const interviewQuestions = [
+interface InterviewQuestion {
+    id: number;
+    company: string;
+    type: string[];
+    description: string;
+    solutionSteps: string[];
+    demo?: () => ReactNode;
+}
+
+const interviewQuestions: InterviewQuestion[] = [
     {
         id: 1,
         company: 'Palo Alto Network',
@@ -52,10 +61,9 @@ const interviewQuestions = [
     },
 ];
 
-export default function InterviewQuestions() {
-
-    const [selectedCompany, setSelectedCompany] = useState('All');
-    const [selectedType, setSelectedType] = useState('All');
+const InterviewQuestions: FC = () => {
+    const [selectedCompany, setSelectedCompany] = useState<string>('All');
+    const [selectedType, setSelectedType] = useState<string>('All');
 
     // Get unique companies and question types for dropdowns
     const companies = ['All', ...new Set(interviewQuestions.map((q) => q.company))];
@@ -74,7 +82,11 @@ export default function InterviewQuestions() {
             <h1>Interview Questions</h1>
             {/* Dropdown to filter by company */}
             <label htmlFor="companyFilter">Filter by Company: </label>
-            <select id="companyFilter" value={selectedCompany} onChange={(e) => setSelectedCompany(e.target.value)}>
+            <select 
+                id="companyFilter" 
+                value={selectedCompany} 
+                onChange={(e) => setSelectedCompany(e.target.value)}
+            >
                 {companies.map((company, index) => (
                     <option key={index} value={company}>
                         {company}
@@ -84,7 +96,11 @@ export default function InterviewQuestions() {
 
             {/* Dropdown to filter by question type */}
             <label htmlFor="typeFilter" style={{marginLeft: '16px'}}>Filter by Question Type: </label>
-            <select id="typeFilter" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+            <select 
+                id="typeFilter" 
+                value={selectedType} 
+                onChange={(e) => setSelectedType(e.target.value)}
+            >
                 {types.map((type, index) => (
                     <option key={index} value={type}>
                         {type}
@@ -109,4 +125,6 @@ export default function InterviewQuestions() {
             ))}
         </div>
     );
-}
+};
+
+export default InterviewQuestions; 
