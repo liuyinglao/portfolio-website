@@ -35,7 +35,66 @@ const Fetchapi: FC = () => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [page, setPage] = useState<number>(1);
   const pageSize = 5;
-  const maxPage = Math.floor(countries.length / pageSize);
+  const maxPage = Math.ceil(countries.length / pageSize) - 1;
+
+  const styles = {
+    tableContainer: {
+      overflowX: 'auto' as const,
+      marginTop: '20px',
+      backgroundColor: '#fff',
+      borderRadius: '8px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    },
+    table: {
+      width: '100%',
+      borderCollapse: 'collapse' as const,
+      backgroundColor: '#fff',
+    },
+    th: {
+      padding: '12px 15px',
+      textAlign: 'left' as const,
+      backgroundColor: '#f0f8ff',
+      borderBottom: '1px solid #e1e8f0',
+      color: '#2c3e50',
+    },
+    td: {
+      padding: '12px 15px',
+      borderBottom: '1px solid #e1e8f0',
+      color: '#34495e',
+    },
+    tr: {
+      transition: 'background-color 0.2s ease-in-out',
+      ':hover': {
+        backgroundColor: '#f8fbff',
+      },
+    },
+    form: {
+      marginTop: '20px',
+      padding: '20px',
+      backgroundColor: '#fff',
+      borderRadius: '8px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    },
+    formGroup: {
+      marginBottom: '15px',
+    },
+    input: {
+      width: '100%',
+      padding: '8px 12px',
+      border: '1px solid #e1e8f0',
+      borderRadius: '4px',
+      marginTop: '5px',
+    },
+    button: {
+      backgroundColor: '#4a90e2',
+      color: 'white',
+      padding: '10px 15px',
+      border: 'none',
+      borderRadius: '4px',
+      cursor: 'pointer',
+      transition: 'background-color 0.2s ease-in-out',
+    },
+  };
 
   useEffect(() => {
     localStorage.setItem("myValueInLocalStorage", value);
@@ -46,24 +105,37 @@ const Fetchapi: FC = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        "https://restcountries.com/v3.1/independent?status=true"
+        "https://restcountries.com/v3.1/all?fields=name,capital,languages",
+        {
+          headers: {
+            'Accept': 'application/json',
+          },
+          mode: 'cors'
+        }
       );
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
       const data: CountryResponse[] = await response.json();
       const countryCount = data.length;
       setValue(countryCount.toString());
-      const countries: Country[] = data.map((country: CountryResponse, index: number) => {
-        const { name, capital, languages } = country;
-        return { index, name, capital, languages };
-      });
+      
+      const countries: Country[] = data
+        .filter(country => country.name && country.capital) // Filter out incomplete data
+        .map((country: CountryResponse, index: number) => {
+          const { name, capital, languages } = country;
+          return { index, name, capital, languages };
+        });
+      
       setCountries(countries);
+      setPage(0); // Reset to first page when new data is loaded
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      console.error('Fetch error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to fetch country data. Please try again later.');
     } finally {
       setIsLoading(false);
-      setPage(0);
     }
   };
 
@@ -71,41 +143,8 @@ const Fetchapi: FC = () => {
     void handleFetchData();
   }, []);
 
-  useEffect(() => {
-    console.log(page);
-  }, [page]);
-
   const onChange = (event: ChangeEvent<HTMLInputElement>): void => 
     setValue(event.target.value);
-
-  const table = (
-    <table>
-      <thead>
-        <tr>
-          <th>No.</th>
-          <th>Name</th>
-          <th>Capital</th>
-          <th>Language</th>
-        </tr>
-      </thead>
-      <tbody>
-        {countries
-          .slice(page * pageSize, (page + 1) * pageSize)
-          .map((country) => {
-            return (
-              <tr key={country.index}>
-                <td>{country.index + 1}</td>
-                <td>{country.name.common}</td>
-                <td>{country.capital[0] ?? 'N/A'}</td>
-                <td>
-                  {Object.values(country.languages).join(', ')}
-                </td>
-              </tr>
-            );
-          })}
-      </tbody>
-    </table>
-  );
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -117,48 +156,93 @@ const Fetchapi: FC = () => {
     console.log("submitted", data);
   };
 
+  const table = (
+    <div style={styles.tableContainer}>
+      <table style={styles.table}>
+        <thead>
+          <tr>
+            <th style={styles.th}>No.</th>
+            <th style={styles.th}>Name</th>
+            <th style={styles.th}>Capital</th>
+            <th style={styles.th}>Languages</th>
+          </tr>
+        </thead>
+        <tbody>
+          {countries
+            .slice(page * pageSize, (page + 1) * pageSize)
+            .map((country) => {
+              return (
+                <tr key={country.index} style={styles.tr}>
+                  <td style={styles.td}>{country.index + 1}</td>
+                  <td style={styles.td}>{country.name.common}</td>
+                  <td style={styles.td}>{country.capital?.[0] ?? 'N/A'}</td>
+                  <td style={styles.td}>
+                    {Object.values(country.languages || {}).join(', ') || 'N/A'}
+                  </td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
+    </div>
+  );
+
   const form = (
-    <form onSubmit={handleSubmit} className="form-example">
-      <div className="form-example">
+    <form onSubmit={handleSubmit} style={styles.form}>
+      <div style={styles.formGroup}>
         <label htmlFor="name">Enter your name: </label>
-        <input type="text" name="name" id="name" required />
+        <input type="text" name="name" id="name" required style={styles.input} />
       </div>
-      <div className="form-example">
+      <div style={styles.formGroup}>
         <label htmlFor="email">Enter your email: </label>
-        <input type="email" name="email" id="email" required />
+        <input type="email" name="email" id="email" required style={styles.input} />
       </div>
-      <div className="form-example">
-        <input type="submit" value="Subscribe!" />
+      <div style={styles.formGroup}>
+        <button type="submit" style={styles.button}>Subscribe!</button>
       </div>
     </form>
   );
 
   return (
-    <div>
-      <input value={value} type="text" onChange={onChange} />
-      <button
-        type="button"
-        onClick={() => setPage((page) => Math.max(0, page - 1))}
-        disabled={page === 0}
-      >
-        Previous Page
-      </button>
-      <button 
-        type="button" 
-        onClick={() => void handleFetchData()}
-        disabled={isLoading}
-      >
-        {isLoading ? 'Loading...' : 'Fetch Countries'}
-      </button>
-      <button
-        type="button"
-        onClick={() => setPage((page) => Math.min(maxPage, page + 1))}
-        disabled={page >= maxPage}
-      >
-        Next Page
-      </button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {isLoading ? <p>Loading...</p> : <p>{value}</p>}
+    <div style={{ padding: '20px' }}>
+      <div style={{ marginBottom: '20px' }}>
+        <input 
+          value={value} 
+          type="text" 
+          onChange={onChange} 
+          style={styles.input}
+          placeholder="Number of countries"
+        />
+        <div style={{ marginTop: '10px', display: 'flex', gap: '10px' }}>
+          <button
+            type="button"
+            onClick={() => setPage((page) => Math.max(0, page - 1))}
+            disabled={page === 0}
+            style={styles.button}
+          >
+            Previous Page
+          </button>
+          <button 
+            type="button" 
+            onClick={() => void handleFetchData()}
+            disabled={isLoading}
+            style={styles.button}
+          >
+            {isLoading ? 'Loading...' : 'Fetch Countries'}
+          </button>
+          <button
+            type="button"
+            onClick={() => setPage((page) => Math.min(maxPage, page + 1))}
+            disabled={page >= maxPage}
+            style={styles.button}
+          >
+            Next Page
+          </button>
+        </div>
+      </div>
+      
+      {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
+      {isLoading && <p>Loading...</p>}
       {table}
       {form}
     </div>

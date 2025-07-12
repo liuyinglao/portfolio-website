@@ -1,5 +1,6 @@
 import { useState, FC, ReactNode } from "react";
 import PaloAltoNetworkInterviewQuestion from "./PaloAltoNetworkInterviewQuestion.component";
+import "./InterviewQuestions.style.css";
 
 interface InterviewQuestion {
     id: number;
@@ -78,48 +79,60 @@ const InterviewQuestions: FC = () => {
     });
 
     return (
-        <div>
-            <h1>Interview Questions</h1>
-            {/* Dropdown to filter by company */}
-            <label htmlFor="companyFilter">Filter by Company: </label>
-            <select 
-                id="companyFilter" 
-                value={selectedCompany} 
-                onChange={(e) => setSelectedCompany(e.target.value)}
-            >
-                {companies.map((company, index) => (
-                    <option key={index} value={company}>
-                        {company}
-                    </option>
-                ))}
-            </select>
+        <div className="interview-container">
+            <h1 className="interview-header">Interview Questions</h1>
+            
+            <div className="filters-container">
+                <div className="filter-group">
+                    <label className="filter-label" htmlFor="companyFilter">
+                        Filter by Company:
+                    </label>
+                    <select 
+                        id="companyFilter" 
+                        className="filter-select"
+                        value={selectedCompany} 
+                        onChange={(e) => setSelectedCompany(e.target.value)}
+                    >
+                        {companies.map((company, index) => (
+                            <option key={index} value={company}>
+                                {company}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-            {/* Dropdown to filter by question type */}
-            <label htmlFor="typeFilter" style={{marginLeft: '16px'}}>Filter by Question Type: </label>
-            <select 
-                id="typeFilter" 
-                value={selectedType} 
-                onChange={(e) => setSelectedType(e.target.value)}
-            >
-                {types.map((type, index) => (
-                    <option key={index} value={type}>
-                        {type}
-                    </option>
-                ))}
-            </select>
+                <div className="filter-group">
+                    <label className="filter-label" htmlFor="typeFilter">
+                        Filter by Type:
+                    </label>
+                    <select 
+                        id="typeFilter" 
+                        className="filter-select"
+                        value={selectedType} 
+                        onChange={(e) => setSelectedType(e.target.value)}
+                    >
+                        {types.map((type, index) => (
+                            <option key={index} value={type}>
+                                {type}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
 
-            {/* Render filtered questions */}
             {filteredQuestions.map((question) => (
-                <div key={question.id} style={{border: '1px solid #ccc', padding: '16px', margin: '16px 0'}}>
-                    <h2>Company: {question.company}</h2>
-                    <p><strong>Type:</strong> {question.type.join(', ')}</p>
-                    <p><strong>Description:</strong> {question.description}</p>
-                    <ul>
-                        <strong>Solution Steps:</strong>
+                <div key={question.id} className="question-card">
+                    <h2 className="company-name">{question.company}</h2>
+                    <div className="question-type">{question.type.join(', ')}</div>
+                    <p className="question-description">{question.description}</p>
+                    
+                    <h3 className="solution-header">Solution Steps:</h3>
+                    <ul className="solution-steps">
                         {question.solutionSteps.map((step, index) => (
-                            <li key={index}>{step}</li>
+                            <li key={index} className="solution-step">{step}</li>
                         ))}
                     </ul>
+                    
                     {question.demo && question.demo()}
                 </div>
             ))}

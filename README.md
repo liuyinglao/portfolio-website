@@ -1,87 +1,196 @@
-to start development on a new device
+# Portfolio Website with ShareList
 
-first install nvm
+A React portfolio website featuring a ShareList component for sharing tools and furniture with friends, powered by a Node.js backend.
 
-### curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+## 🚀 Quick Start Commands
 
-then load nvm to terminal
+### **Frontend (React App)**
+```bash
+# Start development server
+npm start
 
-### export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-### [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# Build for production
+npm run build
 
-then install npm with nvm
+# Run tests
+npm test
+```
 
-### nvm install 16 
+### **Backend (ShareList API)**
+```bash
+# Navigate to backend folder
+cd backend
 
+# Start development server (auto-restart on changes)
+npm run dev
 
+# Start production server
+npm start
 
-# Getting Started with Create React App
+# Install dependencies (if needed)
+npm install
+```
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 🔧 Development Setup
 
-## Available Scripts
+### **1. Start Backend API**
+```bash
+# Terminal 1: Start backend
+cd backend
+npm run dev
 
-In the project directory, you can run:
+# You should see:
+# 🚀 ShareList API server running on port 5001
+# 📊 Health check: http://localhost:5001/api/health
+# 📝 Items API: http://localhost:5001/api/items
+```
 
-### `npm start`
+### **2. Start Frontend**
+```bash
+# Terminal 2: Start React app (from project root)
+npm start
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# React app runs on http://localhost:3000
+# Frontend automatically connects to backend on http://localhost:5001
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### **3. Access the Application**
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:5001/api/health
+- **ShareList**: http://localhost:3000 → Navigate to ShareList tab
 
-### `npm test`
+## 📁 Project Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+portfolio-website/
+├── src/                          # Frontend React code
+│   ├── routes/
+│   │   └── sharelist.component.tsx
+│   └── api/
+│       └── shareListAPI.ts
+├── backend/                      # Backend API server
+│   ├── server.js                # Main server file
+│   ├── package.json            # Backend dependencies & scripts
+│   └── sharelist.db            # SQLite database (created automatically)
+├── package.json                # Frontend dependencies & scripts
+└── README.md                   # This file
+```
 
-### `npm run build`
+## 🗄️ Database
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Type**: SQLite (file-based database)
+- **Location**: 
+  - Local: `backend/sharelist.db`
+  - Production: `/tmp/sharelist.db` (Railway)
+- **Auto-created**: Database and tables are created automatically on first run
+- **Categories**: Items can be categorized as Tool, Furniture, Game, or Other
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🌐 API Endpoints
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- `GET /api/health` - Health check
+- `GET /api/items` - Get all shared items
+- `POST /api/items` - Create new item
+- `PUT /api/items/:id` - Update item
+- `DELETE /api/items/:id` - Delete item
+- `PATCH /api/items/:id/toggle` - Toggle availability
 
-### `npm run eject`
+## 🔧 Environment Configuration
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### **Backend Environment Variables**
+Create `backend/.env` file:
+```env
+NODE_ENV=development
+PORT=5001
+ALLOWED_ORIGINS=http://localhost:3000
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### **Frontend Environment Variables**
+Create `.env` file in project root:
+```env
+REACT_APP_API_URL=http://localhost:5001
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🚂 Deployment
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### **Backend (Railway)**
+1. Deploy backend folder to Railway
+2. Set environment variables:
+   ```
+   NODE_ENV=production
+   ALLOWED_ORIGINS=https://your-frontend-domain.com
+   ```
 
-## Learn More
+### **Frontend (Vercel/Netlify)**
+1. Deploy frontend to your preferred platform
+2. Set environment variable:
+   ```
+   REACT_APP_API_URL=https://your-railway-backend.railway.app
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🧪 Testing
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### **Test Backend**
+```bash
+# Health check
+curl http://localhost:5001/api/health
 
-### Code Splitting
+# Get items
+curl http://localhost:5001/api/items
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+# Create item
+curl -X POST http://localhost:5001/api/items \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Test Item","category":"tool","purchaseDate":"2024-01-01"}'
+```
 
-### Analyzing the Bundle Size
+### **Test Frontend**
+1. Open http://localhost:3000
+2. Navigate to ShareList tab
+3. Add, edit, and delete items
+4. Check that changes persist after refresh
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 📋 Available Scripts Reference
 
-### Making a Progressive Web App
+### **Frontend Scripts** (from project root)
+| Command | Description |
+|---------|-------------|
+| `npm start` | Start development server on port 3000 |
+| `npm run build` | Build production bundle |
+| `npm test` | Run test suite |
+| `npm run eject` | Eject from Create React App |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### **Backend Scripts** (from `backend/` folder)
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start with nodemon (auto-restart) |
+| `npm start` | Start production server |
+| `npm install` | Install dependencies |
 
-### Advanced Configuration
+## 🆘 Troubleshooting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### **Backend won't start**
+- Check if port 5001 is available
+- Run `npm install` in backend folder
+- Check for syntax errors in server.js
 
-### Deployment
+### **Frontend can't connect to backend**
+- Ensure backend is running on port 5001
+- Check CORS configuration
+- Verify API URL in frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### **CORS errors**
+- Check backend logs for blocked origins
+- Verify ALLOWED_ORIGINS environment variable
+- Ensure frontend origin matches CORS config
 
-### `npm run build` fails to minify
+## 🔗 Useful Links
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Local Frontend**: http://localhost:3000
+- **Local Backend**: http://localhost:5001
+- **API Health**: http://localhost:5001/api/health
+- **ShareList Documentation**: [ShareList_Feature_Documentation.md](./ShareList_Feature_Documentation.md)
+- **Railway Deployment**: [RAILWAY_DEPLOYMENT_GUIDE.md](./RAILWAY_DEPLOYMENT_GUIDE.md)
+
+---
+
+**Happy coding!** 🚀

@@ -20,12 +20,12 @@ interface Column {
 
 const ReactDomFeatureList: FC = () => {
     const data: FeatureData[] = [
-        {id: 1, feature: "counter", showcase: <NumberAdjuster/>},
-        {id: 2, feature: "input", showcase: <Autocomplete/>},
-        {id: 3, feature: "Accordion", showcase: <Accordion/>},
-        {id: 4, feature: "Carousel", showcase: <Carousel/>},
-        {id: 5, feature: "Fetchapi", showcase: <Fetchapi/>},
-        {id: 6, feature: "ConnectionTest", showcase: <ConnectionTest/>},
+        {id: 1, feature: "Counter", showcase: <div className="feature-showcase"><NumberAdjuster/></div>},
+        {id: 2, feature: "Autocomplete Input", showcase: <div className="feature-showcase"><Autocomplete/></div>},
+        {id: 3, feature: "Accordion", showcase: <div className="feature-showcase"><Accordion/></div>},
+        {id: 4, feature: "Carousel", showcase: <div className="feature-showcase"><Carousel/></div>},
+        {id: 5, feature: "Fetch API Demo", showcase: <div className="feature-showcase"><Fetchapi/></div>},
+        {id: 6, feature: "Django Connection Test", showcase: <div className="feature-showcase"><ConnectionTest/></div>},
     ];
 
     const columns: Column[] = [
@@ -34,24 +34,26 @@ const ReactDomFeatureList: FC = () => {
     ];
 
     return (
-        <table style={{border: "solid 1px gray"}}>
-            <thead>
-                <tr>
-                    {columns.map((column) => (
-                        <th key={column.accessor}>{column.header}</th>
-                    ))}
-                </tr>
-            </thead>
-            <tbody>
-                {data.map((row) => (
-                    <tr key={row.id}>
+        <div className="feature-table-container">
+            <table className="feature-table">
+                <thead>
+                    <tr>
                         {columns.map((column) => (
-                            <td key={column.accessor}>{row[column.accessor]}</td>
+                            <th key={column.accessor}>{column.header}</th>
                         ))}
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {data.map((row) => (
+                        <tr key={row.id}>
+                            {columns.map((column) => (
+                                <td key={column.accessor}>{row[column.accessor]}</td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
 }
 

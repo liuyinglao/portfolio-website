@@ -22,6 +22,10 @@ const Navigation: FC = () => {
       title: "Game",
       path: "/game",
     },
+    {
+      title: "ShareList",
+      path: "/sharelist",
+    },
   ];
   
   return (

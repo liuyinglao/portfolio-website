@@ -1,0 +1,166 @@
+.interview-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.interview-header {
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+}
+
+.filters-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-label {
+  color: #34495e;
+  font-weight: 500;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border: 1px solid #e1e8f0;
+  border-radius: 4px;
+  background-color: white;
+  color: #2c3e50;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.filter-select:hover {
+  border-color: #4a90e2;
+}
+
+.question-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid #e1e8f0;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.question-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.company-name {
+  color: #2c3e50;
+  margin: 0 0 16px 0;
+  font-size: 1.8em;
+}
+
+.question-type {
+  display: inline-block;
+  background-color: #f0f8ff;
+  color: #4a90e2;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.9em;
+  margin-bottom: 16px;
+}
+
+.question-description {
+  color: #34495e;
+  font-size: 1.1em;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.solution-steps {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.solution-step {
+  color: #34495e;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f8ff;
+  line-height: 1.5;
+}
+
+.solution-step:last-child {
+  border-bottom: none;
+}
+
+.solution-header {
+  color: #2c3e50;
+  margin: 20px 0 12px 0;
+  font-size: 1.2em;
+}
+
+/* PaloAlto Network Question Specific Styles */
+.palo-alto-container {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.palo-alto-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px 12px;
+  border: 1px solid #e1e8f0;
+  border-radius: 4px;
+  margin-top: 8px;
+  font-size: 1rem;
+}
+
+.palo-alto-label {
+  color: #34495e;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.salary-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+}
+
+.salary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #f0f8ff;
+  color: #34495e;
+}
+
+.salary-item:last-child {
+  border-bottom: none;
+}
+
+.loading-text {
+  color: #4a90e2;
+  font-size: 1.2em;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.no-results {
+  color: #666;
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-style: italic;
+} 
